@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dicoding Tasks API</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <a href="#api">Task Management API</a>
+      <ul class="ml-1">
+        <li><a href="#endpoint">Endpoint</a></li>
+        <li>
+          <ul class="ml-1">
+            <li>
+              <a href="#user">User</a>
+              <ul class="ml-1">
+                <li><a href="#register">Register</a></li>
+                <li><a href="#login">Login</a></li>
+                <li><a href="#user-logged">Get User logged in</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#tasks">Tasks</a>
+              <ul class="ml-1">
+                <li><a href="#create-task">Create Task</a></li>
+                <li><a href="#get-tasks">Get Tasks (non-archived)</a></li>
+                <li><a href="#get-archived">Get Archived Tasks</a></li>
+                <li><a href="#get-single">Get Single Task</a></li>
+                <li><a href="#archive-task">Archive Task</a></li>
+                <li><a href="#unarchive-task">Unarchive Task</a></li>
+                <li><a href="#delete-task">Delete Task</a></li>
+                <li><a href="#update-task">Update Task</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <h1 id="api">Task Management API</h1>
+      <blockquote>
+        <p>
+          API untuk menyimpan task secara online. Digunakan untuk project Task
+          Management App.
+        </p>
+      </blockquote>
+
+      <h2 id="endpoint">Endpoint</h2>
+      <a href="http://localhost:8000/">http://localhost:8000/api</a>
+      <br />
+      <br />
+      <a href="https://task-management-api-production-288a.up.railway.app"
+        >https://task-management-api-production-288a.up.railway.app/api</a
+      >
+
+      <h2 id="user">User</h2>
+      <!-- User Register -->
+      <h3 id="register">Register</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/register</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>POST</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Request Body:
+          <ul class="ml-1">
+            <li><code>name</code> as <code>string</code></li>
+            <li><code>email</code> as <code>string</code>, must be unique</li>
+            <li>
+              <code>password</code> as <code>string</code>, must be at least 6
+              characters
+            </li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "User Created"
+            }
+          </pre>
+        </li>
+      </ul>
+
+      <!-- User Login -->
+      <h3 id="login">Login</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/login</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>POST</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Request Body:
+          <ul class="ml-1">
+            <li><code>email</code> as <code>string</code></li>
+            <li><code>password</code> as <code>string</code></li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "User logged successfully",
+              "data": {
+                  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXlqNXBjX0xBUkNfQWdLNjEiLCJpYXQiOjE2NDE3OTk5NDl9.flEMaQ7zsdYkxuyGbiXjEDXO8kuDTcI__3UjCwt6R_I"
+              }
+          }
+          </pre>
+        </li>
+      </ul>
+
+      <!-- User Get User logged in -->
+      <h3 id="user-logged">Get User logged in</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/login</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>GET</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li>
+              <code>Authorization</code> : <code>Bearer {accessToken} </code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "User retrieved",
+              "data": {
+                  "id": "user-yj5pc_LARC_AgK61",
+                  "name": "John Doe",
+                  "email": "john@example.com"
+              }
+          }
+          </pre>
+        </li>
+      </ul>
+
+      <h2 id="tasks">Tasks</h2>
+      <!-- Create Task -->
+      <h3 id="create-task">Create Task</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/tasks</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>POST</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li><code>Authorization</code> : <code>Bearer {accessToken}</code></li>
+          </ul>
+        </li>
+        <li>
+          Request Body:
+          <ul class="ml-1">
+            <li><code>title</code> as <code>string</code></li>
+            <li><code>body</code> as <code>string</code></li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "Task created",
+              "data": {
+                  "id": "tasks-_O6A6TJcCYUWO7t4",
+                  "title": "Hello, Tasks!",
+                  "body": "My new tasks.",
+                  "owner": "user-l-wposXQYGosf0ZA",
+                  "status": "to-do"
+                  "archived": false,
+                  "createdAt": "2022-07-28T10:12:12.396Z"
+              }
+            }
+          </pre>
+        </li>
+      </ul>
+
+      <!-- Get Tasks (non-archived) -->
+      <h3 id="get-tasks">Get Tasks (non-archived)</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/tasks</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>GET</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li>
+              <code>Authorization</code> : <code>Bearer {accessToken} </code>
+            </li>
+          </ul>
+        </li>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "Tasks retrieved",
+              "data": [
+                  {
+                      "id": "tasks-jT-jjsyz61J8XKiI",
+                      "title": "Welcome to Tasks, Dimas!",
+                      "body": "Welcome to Tasks! This is your first task. You can archive it, delete it, or create new ones.",
+                      "createdAt": "2022-07-28T10:03:12.594Z",
+                      "status": "to-do"
+                      "archived": false,
+                      "owner": "user-l-wposXQYGosf0ZA"
+                  }
+              ]
+            }
+          </pre>
+        </li>
+      </ul>
+
+      <!-- Get Archived Tasks -->
+      <h3 id="get-archived">Get Archived Tasks</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/tasks/archived</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>GET</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li>
+              <code>Authorization</code> : <code>Bearer {accessToken} </code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "Task retrieved",
+              "data": [
+                  {
+                      "id": "tasks-jT-jjsyz61J8XKiI",
+                      "title": "Welcome to Tasks, Dimas!",
+                      "body": "Welcome to Tasks! This is your first task. You can archive it, delete it, or create new ones.",
+                      "createdAt": "2022-07-28T10:03:12.594Z",
+                      "status": "to-do"
+                      "archived": true,
+                      "owner": "user-l-wposXQYGosf0ZA"
+                  }
+              ]
+            }
+          </pre>
+        </li>
+      </ul>
+
+      <!-- Get Single Task -->
+      <h3 id="get-single">Get Single Task</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/tasks/{task_id}</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>GET</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li>
+              <code>Authorization</code> : <code>Bearer {accessToken} </code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "Tasks retrieved",
+              "data": {                  {
+                    "id": "tasks-jT-jjsyz61J8XKiI",
+                    "title": "Welcome to Tasks, Dimas!",
+                    "body": "Welcome to Tasks! This is your first task. You can archive it, delete it, or create new ones.",
+                    "createdAt": "2022-07-28T10:03:12.594Z",
+                    "status": "to-do"
+                    "archived": true,
+                    "owner": "user-l-wposXQYGosf0ZA"
+                  }
+          </pre>
+        </li>
+      </ul>
+      
+      <!-- Archive Task -->
+      <h3 id="archive-task">Archive Task</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/tasks/{task_id}/archive</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>POST</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li>
+              <code>Authorization</code> : <code>Bearer {accessToken} </code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "Task archived"
+            }
+          </pre>
+        </li>
+      </ul>
+      
+      <!-- Unarchive Task -->
+      <h3 id="unarchive-task">Unarchive Task</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/tasks/{task_id}/unarchive</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>POST</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li>
+              <code>Authorization</code> : <code>Bearer {accessToken} </code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "Task unarchived"
+            }
+          </pre>
+        </li>
+      </ul>
+
+      <!-- Delete Task -->
+      <h3 id="delete-task">Delete Task</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/tasks/{task_id}</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>DELETE</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li>
+              <code>Authorization</code> : <code>Bearer {accessToken} </code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            {
+              "status": "success",
+              "message": "Task deleted"
+            }
+          </pre>
+        </li>
+      </ul>
+
+      <!-- Update Task -->
+      <h3 id="update-task">Update Task</h3>
+      <ul class="markdown-ul ml-2">
+        <li>
+          URL:
+          <ul class="ml-1">
+            <li>
+              <code>/tasks/{task_id}</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Method:
+          <ul class="ml-1">
+            <li>
+              <code>PUT</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Headers:
+          <ul class="ml-1">
+            <li>
+              <code>Authorization</code> : <code>Bearer {accessToken} </code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          Request Body:
+          <ul class="ml-1">
+            <li><code>title</code> as <code>string</code></li>
+            <li><code>body</code> as <code>string</code></li>
+            <li><code>archived</code> as <code>boolean</code></li>
+            <li><code>status</code> as <code>string</code></li>
+          </ul>
+        </li>
+        <li>
+          Response:
+          <pre>
+            { 
+              "status": "success",
+              "message": "Task updated",
+              "data": {
+                  "id": "67611fc1836036d937cfe139",
+                  "title": "Amazing Task now a day",
+                  "body": "This task is edited",
+                  "status": "to-do",
+                  "createdAt": "2024-12-17T06:52:49.959Z",
+                  "archived": true,
+                  "owner": "67611f5a836036d937cfe135"
+                }
+              }
+          </pre>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>
