@@ -16,25 +16,15 @@ const PORT = process.env.PORT || 8000;
 
 dotenv.config();
 
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Pastikan domain frontend sesuai
-    credentials: true,
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
-  })
-);
-
-// Tangani preflight request secara eksplisit
-app.options("*", cors());
+app.use(cors());
 
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api", authRoutes);
-app.use("/api", taskRoutes);
-app.use("/api", userRoutes);
+app.use(authRoutes);
+app.use(taskRoutes);
+app.use(userRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running");
