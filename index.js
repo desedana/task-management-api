@@ -8,29 +8,42 @@ import userRoutes from "./routes/user.route.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
+// Load environment variables
+dotenv.config();
+
+// Konversi __dirname di ES Module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// Konfigurasi PORT dan HOST
 const PORT = process.env.PORT || 8000;
+const HOST = process.env.NODE_ENV !== "production" ? "localhost" : "0.0.0.0";
 
-dotenv.config();
-
-app.use(cors());
-
+// Middleware
+app.use(cors({ origin: "*" }));
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname, "public")));
 
+// Routes
 app.use(authRoutes);
 app.use(taskRoutes);
 app.use(userRoutes);
 
+// Default route
 app.get("/", (req, res) => {
   res.send("API is running");
 });
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server running on port ${PORT}`);
-});
+// Koneksi ke database & Jalankan server
+connectDB()
+  .then(() => {
+    app.listen(PORT, HOST, () => {
+      console.log(`Server running on http://${HOST}:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Database connection failed", err);
+    process.exit(1); // Keluar jika gagal koneksi database
+  });
